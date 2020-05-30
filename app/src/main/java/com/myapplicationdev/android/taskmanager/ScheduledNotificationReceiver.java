@@ -26,6 +26,7 @@ public class ScheduledNotificationReceiver extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("default", "Default Channel", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("This is for default notification");
+            notificationManager.createNotificationChannel(channel);
         }
 
         Intent i = new Intent(context, AddActivity.class);
