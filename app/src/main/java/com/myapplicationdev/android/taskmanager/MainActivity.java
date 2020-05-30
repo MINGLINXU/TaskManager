@@ -40,9 +40,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,AddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 9);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 9){
+
+            DBHelper db = new DBHelper(MainActivity.this);
+            tasks.clear();
+            tasks.addAll(db.getAllTask());
+            db.close();
+
+            ca.notifyDataSetChanged();
+
+        }
     }
 
 }

@@ -17,7 +17,7 @@ public class AddActivity extends AppCompatActivity {
 
     EditText etName, etDescription, etSecond;
     Button btnAdd, btnCancel;
-    int reqCode = 1;
+    int reqCode = 12345;
 
 
 
@@ -40,12 +40,15 @@ public class AddActivity extends AppCompatActivity {
                 Calendar cal = Calendar.getInstance();
                 int seconds = Integer.parseInt(etSecond.getText().toString());
                 cal.add(Calendar.SECOND, seconds);
-                Intent i = new Intent(AddActivity.this, MainActivity.class);
-                Intent intent = new Intent(AddActivity.this, NotificationReceiver.class);
+                Intent intent = new Intent(AddActivity.this, ScheduledNotificationReceiver.class);
+                intent.putExtra("name", etName.getText().toString());
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(AddActivity.this, reqCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
                 AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
                 am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-                startActivity(i);
+
+                Intent intentBack = new Intent(AddActivity.this, MainActivity.class);
+                startActivity(intentBack);
             }
         });
 
